@@ -24,7 +24,7 @@ jobs:
         - build: macos
           os: macos-latest
           rust: nightly
-          target: universal-apple-darwin
+          target: x86_64-apple-darwin
       fail-fast: false
 
     steps:
@@ -34,7 +34,7 @@ jobs:
     - name: install node
       uses: actions/setup-node@v1
       with:
-        node-version: 14
+        node-version: 18
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
