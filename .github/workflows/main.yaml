@@ -55,7 +55,7 @@ jobs:
       run: npm run build:all-unix
     
     - name: build for MacOS
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'macos-latest'
       run: npm run build:all-unix
     
     - name: build for windows
