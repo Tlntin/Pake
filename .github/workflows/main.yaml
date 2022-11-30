@@ -43,7 +43,10 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
-        npm run build:linux_all
+    
+    - name: build for Ubuntu
+      if: matrix.platform == 'ubuntu-latest'
+      run: npm run build:linux_all
     
     - name: install windows
       if: matrix.platform == 'windows-latest'
