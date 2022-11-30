@@ -1,6 +1,10 @@
 name: build
 on:
-  workflow_dispatch: {}
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - "v*"
+
 jobs:
   build:
     name: build
@@ -13,12 +17,10 @@ jobs:
           os: ubuntu-latest
           rust: nightly
           target: x86_64-unknown-linux-musl
-          archive-name: NodeInject-linux.tar.gz
         - build: windows
           os: windows-latest
           rust: nightly-x86_64-msvc
           target: x86_64-pc-windows-msvc
-          archive-name: NodeInject-windows.7z
       fail-fast: false
 
     steps:
