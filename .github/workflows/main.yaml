@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        build: [linux, windows]
+        build: [linux, windows, macos]
         include:
         - build: linux
           os: ubuntu-latest
@@ -21,6 +21,10 @@ jobs:
           os: windows-latest
           rust: nightly-x86_64-msvc
           target: x86_64-pc-windows-msvc
+        - build: macos
+          os: macos-latest
+          rust: nightly
+          target: universal-apple-darwin
       fail-fast: false
 
     steps:
@@ -50,19 +54,33 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: npm run build:all-unix
     
+    - name: build for MacOS
+      if: matrix.os == 'ubuntu-latest'
+      run: npm run build:all-unix
+    
     - name: build for windows
       if: matrix.os == 'windows-latest'
       run: |
         npm run build:all-windows
 
-    - name: Create Release and Upload Release Asset
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+    # - name: Create Release and Upload Release Asset
+    #   uses: softprops/action-gh-release@v1
+    #   if: startsWith(github.ref, 'refs/tags/')
+    #   with:
+    #     tag_name: ${{ github.ref }}
+    #     name: Release ${{ github.ref }}
+    #     body: TODO New Release.
+    #     draft: false
+    #     prerelease: false
+    #     files: |
+    #       output/*/*.*
+    - uses: actions/upload-artifact@v2
+        with:
+          path: output/*/*.*
+    
+    - uses: ncipollo/release-action@v1
+      if: startsWith(github.ref, 'refs/tags/v')
       with:
-        tag_name: ${{ github.ref }}
-        name: Release ${{ github.ref }}
-        body: TODO New Release.
-        draft: false
-        prerelease: false
-        files: |
-          output/*/*.*
+        allowUpdates: true
+        artifacts: "output/*/*.*"
+        token: ${{ secrets.GITHUB_TOKEN }}
