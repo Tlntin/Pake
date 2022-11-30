@@ -10,12 +10,12 @@ jobs:
         build: [linux, windows]
         include:
         - build: linux
-          os: ubuntu-18.04
+          os: ubuntu-latest
           rust: nightly
           target: x86_64-unknown-linux-musl
           archive-name: NodeInject-linux.tar.gz
         - build: windows
-          os: windows-2019
+          os: windows-latest
           rust: nightly-x86_64-msvc
           target: x86_64-pc-windows-msvc
           archive-name: NodeInject-windows.7z
@@ -24,6 +24,11 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    
+    - name: install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 18
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
