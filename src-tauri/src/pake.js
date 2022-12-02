@@ -19,6 +19,14 @@ const metaKeyShortcuts = {
   0: () => zoomCommon(() => "100%"),
 };
 
+let paste_text = "";
+
+function my_click() {
+  console.log("执行了my_click");
+  document.getElementById("baidu_translate_input").value = "";
+  auto_paste = false;
+}
+
 const ctrlKeyShortcuts = {
   ArrowUp: () => scrollTo(0, 0),
   ArrowDown: () => scrollTo(0, document.body.scrollHeight),
@@ -286,6 +294,54 @@ window.addEventListener("DOMContentLoaded", (_event) => {
     window.ipc.postMessage("fullscreen");
   });
 
+  if (location.host == "fanyi.baidu.com") {
+    let block_list = document.getElementsByClassName("products-list");
+    for (let i = 0; i < block_list.length; i++) {
+      console.log(typeof block_list[i])
+      block_list[i].innerHTML = "";
+    } 
+    let block_list2 = document.getElementsByClassName("app-side-link");
+    for (let j = 0; j < block_list2.length; j++) {
+      block_list2[j].innerHTML = "";
+    }
+
+    let block_list3 = document.getElementsByClassName("navigation-wrapper");
+    for (let z = 0; z < block_list3.length; z++) {
+      block_list3[z].innerHTML = "";
+    }
+
+
+    let block_list4 = document.getElementsByClassName("app-side-banner");
+    for (let zz = 0; zz < block_list4.length; z++) {
+      block_list4[zz].remove();
+    }
+
+    let box1 = document.getElementById("sideBannerContainer");
+          if (box1 != null) {
+            box1.remove()
+          }
+
+    let box2 = document.getElementById("left-result-container");
+      if (box2 != null) {
+        box2.remove()
+    }
+    let block_list5 = document.getElementsByClassName("extra-wrap");
+    for (let xx = 0; xx < block_list5.length; xx++) {
+      block_list5[xx].remove();
+    }
+
+    let block_list6 = document.getElementsByClassName("inner clearfix");
+    for (let xx = 0; xx < block_list6.length; xx++) {
+      block_list6[xx].remove();
+    }
+    document.addEventListener("mouseover", auto_pasete_for_baidu_fanyi);
+    document.addEventListener("click", auto_pasete_for_baidu_fanyi);
+    document.addEventListener("mouseout", auto_pasete_for_baidu_fanyi);
+  }
+
+  
+
+
   document.addEventListener("keyup", function (event) {
     const preventDefault = (f) => {
       event.preventDefault();
@@ -347,4 +403,47 @@ function zoomIn() {
 
 function zoomOut() {
   zoomCommon((htmlZoom) => `${Math.max(parseInt(htmlZoom) - 10, 30)}%`);
+}
+
+
+async function auto_pasete_for_baidu_fanyi() {
+  // 自动粘贴for 百度翻译
+  const text = await navigator.clipboard.readText();
+  if (text != paste_text) {
+    console.log("text is", text);
+    console.log("old paste text is", paste_text);
+    paste_text = text;
+    let input_box = document.getElementById("baidu_translate_input");
+    input_box.focus();
+    let event0 = new UIEvent('input', {
+      bubbles: false,
+      cancelable: false
+    });
+       
+    input_box.value = text;
+    input_box.dispatchEvent(event0);
+
+    input_box.focus()
+    var event = document.createEvent("HTMLEvents");
+    event.initEvent("change", false, true);
+    input_box.dispatchEvent(event)
+    console.log(0, text);
+    setTimeout(1000);
+
+    let box1 = document.getElementById("sideBannerContainer");
+      if (box1 != null) {
+        box1.remove()
+      }
+
+    let box2 = document.getElementById("left-result-container");
+      if (box2 != null) {
+        box2.remove()
+      }
+    let clear_box = document.getElementsByClassName("textarea-clear-btn");
+    if (clear_box.length > 0) {
+      clear_box = clear_box[0];
+      clear_box.href = "javascript:void(0)";
+      clear_box.οnclick= function(){my_click()};
+    }
+  }
 }

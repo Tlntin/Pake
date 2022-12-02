@@ -1,12 +1,12 @@
 {
   "package": {
-    "productName": "WeRead",
+    "productName": "BaiduFanyi",
     "version": "1.0.0"
   },
   "tauri": {
     "windows": [
       {
-        "url": "https://weread.qq.com/",
+        "url": "https://fanyi.baidu.com/translate#yue/zh/",
         "transparent": true,
         "fullscreen": false,
         "width": 1200,
@@ -19,12 +19,11 @@
     },
     "bundle": {
       "icon": [
-        "icons/weread.icns",
-        "png/weread_256.ico",
-        "png/weread_32.ico",
-        "png/weread_512.png"
+        "png/baidufanyi_256.ico",
+        "png/baidufanyi_32.ico",
+        "png/baidufanyi_512.png"
       ],
-      "identifier": "com.tw93.weread",
+      "identifier": "com.tw93.aiyueyu",
       "active": true,
       "category": "DeveloperTool",
       "copyright": "",
@@ -40,7 +39,7 @@
           "librsvg2-dev"
         ],
         "files": {
-          "/usr/share/applications/com-tw93-weread.desktop": "assets/com-tw93-weread.desktop"
+          "/usr/share/applications/com-tw93-baidufanyi.desktop": "assets/com-tw93-baidufanyi.desktop"
         }
       },
       "externalBin": [],
@@ -52,7 +51,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": ["png/weread_32.ico"],
+      "resources": ["png/baidufanyi_32.ico"],
       "shortDescription": "",
       "targets": ["deb", "msi", "dmg"],
       "windows": {

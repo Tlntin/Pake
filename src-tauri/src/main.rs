@@ -119,7 +119,7 @@ fn main() -> wry::Result<()> {
         })
         .with_inner_size(wry::application::dpi::LogicalSize::new(width, height));
     #[cfg(target_os = "windows")]
-    let icon = load_icon(std::path::Path::new("png/weread_32.ico"));
+    let icon = load_icon(std::path::Path::new("png/baidufanyi_32.ico"));
 
     #[cfg(target_os = "windows")]
     let window = common_window
@@ -180,13 +180,14 @@ fn main() -> wry::Result<()> {
         .with_devtools(cfg!(feature = "devtools"))
         .with_initialization_script(include_str!("pake.js"))
         .with_ipc_handler(handler)
+        .with_clipboard(true)
         // .with_back_forward_navigation_gestures(true)
         .build()?;
     // 自定义cookie文件夹，仅用于Linux
     // Custom Cookie folder, only for Linux
     #[cfg(target_os = "linux")]
     let data_path =
-        std::path::PathBuf::from(concat!("/home/", env!("USER"), "/.config/com-tw93-weread/"));
+        std::path::PathBuf::from(concat!("/home/", env!("USER"), "/.config/com-tw93-aiyueyu/"));
     #[cfg(target_os = "linux")]
     if !std::path::Path::new(&data_path).exists() {
         std::fs::create_dir(&data_path)?;
